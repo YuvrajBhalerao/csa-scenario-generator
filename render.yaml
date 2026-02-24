@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: csa-scenario-generator
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false # 'false' means you must paste the key manually in Render's dashboard for security
