@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServiceNow CSA PDI Generator</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ServiceNow PDI Scenario Generator</h1>
+            <p>Practice real-world administration tasks for your CSA exam.</p>
+        </header>
+
+        <main id="selection-screen">
+            <button class="btn-primary" onclick="generateScenario('random')">
+                ✨ Generate from Any Module
+            </button>
+            
+            <div class="module-grid">
+                <button class="module-card" onclick="generateScenario('ServiceNow Overview')">1. ServiceNow Overview</button>
+                <button class="module-card" onclick="generateScenario('User Interface & Navigation')">2. User Interface & Navigation</button>
+                <button class="module-card" onclick="generateScenario('Lists, Filters & Forms')">3. Lists, Filters & Forms</button>
+                <button class="module-card" onclick="generateScenario('Data Schema & Tables')">4. Data Schema & Tables</button>
+                <button class="module-card" onclick="generateScenario('Self-Service, Knowledge-Catalog & Workflows')">5. Self-Service, Knowledge & Workflows</button>
+                <button class="module-card" onclick="generateScenario('Reporting & Dashboards, Platform Analytics')">6. Reporting & Analytics</button>
+                <button class="module-card" onclick="generateScenario('ServiceNow Utilities')">7. ServiceNow Utilities</button>
+                <button class="module-card" onclick="generateScenario('Security in ServiceNow Platform')">8. Security in Platform</button>
+            </div>
+        </main>
+
+        <div id="loading-screen" class="hidden">
+            <div class="spinner"></div>
+            <h2>Spinning up your PDI challenge...</h2>
+            <p>Consulting the Now Platform guidelines.</p>
+        </div>
+
+        <div id="result-screen" class="hidden">
+            <button class="btn-secondary" onclick="resetApp()">← Back to Modules</button>
+            
+            <div class="scenario-card">
+                <span class="badge" id="res-module">Module Name</span>
+                <h2 id="res-problem">Problem Statement</h2>
+                
+                <div class="reveal-section">
+                    <button class="btn-outline" onclick="toggleVisibility('hints-container')">💡 Show Hints</button>
+                    <ul id="hints-container" class="hidden list-group"></ul>
+                </div>
+
+                <div class="reveal-section">
+                    <button class="btn-outline" onclick="toggleVisibility('steps-container')">🛠️ Show Guided Steps</button>
+                    <ul id="steps-container" class="hidden list-group"></ul>
+                </div>
+
+                <div class="info-box">
+                    <strong>⭐ Pro Tip:</strong> <span id="res-tips"></span>
+                </div>
+
+                <div class="info-box">
+                    <strong>📚 Study References:</strong>
+                    <ul id="res-refs"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
