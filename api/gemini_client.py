@@ -46,16 +46,14 @@ def get_scenario_from_gemini(module: str) -> dict:
     """
     
     try:
-        # 1. Removed the problematic generation_config
-        model = genai.GenerativeModel(model_name='gemini-1.5-flash')
+        # 1. Removed generation_config entirely
+        model = genai.GenerativeModel('gemini-1.5-flash')
         
         response = model.generate_content(prompt)
         
         # 2. Defensive Programming: Clean the text before parsing
         raw_text = response.text.strip()
         
-        # Sometimes the AI wraps JSON in markdown block quotes (```json ... ```)
-        # We need to strip those out so Python's json.loads() doesn't crash
         if raw_text.startswith("```json"):
             raw_text = raw_text[7:]
         elif raw_text.startswith("```"):
