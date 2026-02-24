@@ -48,7 +48,7 @@ def get_scenario_from_gemini(module: str) -> dict:
     try:
         # Using a fast model optimized for quick web responses
         model = genai.GenerativeModel(
-            model_name='gemini-2.5-flash',
+            model_name='gemini-1.5-flash',
             generation_config={"response_mime_type": "application/json"}
         )
         
