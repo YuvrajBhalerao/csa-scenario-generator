@@ -46,18 +46,28 @@ def get_scenario_from_gemini(module: str) -> dict:
     """
     
     try:
-        # Using a fast model optimized for quick web responses
-        model = genai.GenerativeModel(
-            model_name='gemini-1.5-flash',
-            generation_config={"response_mime_type": "application/json"}
-        )
+        # 1. Removed the problematic generation_config
+        model = genai.GenerativeModel(model_name='gemini-1.5-flash')
         
         response = model.generate_content(prompt)
         
-        # Parse the JSON string into a Python dictionary
-        return json.loads(response.text)
+        # 2. Defensive Programming: Clean the text before parsing
+        raw_text = response.text.strip()
+        
+        # Sometimes the AI wraps JSON in markdown block quotes (```json ... ```)
+        # We need to strip those out so Python's json.loads() doesn't crash
+        if raw_text.startswith("```json"):
+            raw_text = raw_text[7:]
+        elif raw_text.startswith("```"):
+            raw_text = raw_text[3:]
+            
+        if raw_text.endswith("```"):
+            raw_text = raw_text[:-3]
+            
+        # Parse the cleaned string into a proper Python dictionary
+        return json.loads(raw_text.strip())
         
     except json.JSONDecodeError:
-        return {"error": "Failed to parse AI response into JSON."}
+        return {"error": "Failed to parse AI response. The model didn't return valid JSON."}
     except Exception as e:
         return {"error": f"API Error: {str(e)}"}
