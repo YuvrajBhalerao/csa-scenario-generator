@@ -3,7 +3,7 @@
    ========================================= */
 :root {
     --text-main: #ffffff;
-    --text-muted: #a1a1aa; /* Softer gray for less eye strain */
+    --text-muted: #a1a1aa;
     --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
     --glass-border: rgba(255, 255, 255, 0.12);
     --glass-highlight: rgba(255, 255, 255, 0.25);
@@ -11,7 +11,6 @@
     --accent-magenta: #ff007f;
 }
 
-/* Custom Text Selection Highlight */
 ::selection {
     background: rgba(255, 0, 128, 0.4);
     color: #ffffff;
@@ -20,17 +19,25 @@
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     margin: 0;
-    padding: 40px 20px;
     background-color: #050505;
     color: var(--text-main);
     display: flex;
-    justify-content: center;
-    min-height: 100vh;
+    flex-direction: column; /* Forces vertical stacking */
+    min-height: 100vh; /* Ensures the body is at least as tall as the screen */
     overflow-x: hidden;
     position: relative;
     z-index: 1;
-    line-height: 1.7; /* Premium reading spacing */
+    line-height: 1.7;
     letter-spacing: -0.01em;
+}
+
+.container {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 20px;
+    flex: 1; /* CRITICAL: This pushes the footer down to the bottom */
+    box-sizing: border-box;
 }
 
 /* =========================================
@@ -38,7 +45,7 @@ body {
    ========================================= */
 body::before, body::after, .container::before {
     content: '';
-    position: absolute;
+    position: fixed; /* Fixed so it doesn't scroll */
     border-radius: 50%;
     filter: blur(140px);
     z-index: -1;
@@ -70,201 +77,9 @@ body::after {
     100% { transform: translate(4%, 8%) scale(1.05); }
 }
 
-.container {
-    max-width: 900px;
-    width: 100%;
-}
-
-/* =========================================
-   TYPOGRAPHY
-   ========================================= */
-header { text-align: center; margin-bottom: 60px; }
-
-header h1 {
-    font-size: 3.2rem;
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    margin-bottom: 12px;
-    background: linear-gradient(to right, #ffffff 30%, #a1a1aa);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-header p { color: var(--text-muted); font-size: 1.15rem; font-weight: 400; }
-
-/* =========================================
-   ULTRA-FROSTED GLASS CARDS
-   ========================================= */
-.module-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
-    margin-top: 40px;
-}
-
-.module-card, .scenario-card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
-    border: 1px solid var(--glass-border);
-    border-top: 1px solid var(--glass-highlight);
-    border-left: 1px solid var(--glass-highlight);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    border-radius: 24px;
-    color: var(--text-main);
-}
-
-.module-card {
-    padding: 24px 20px;
-    font-size: 1.05rem;
-    font-weight: 600;
-    text-align: left;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.module-card:hover {
-    transform: translateY(-6px);
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 212, 255, 0.2);
-}
-
-/* =========================================
-   SCENARIO RESULTS UI
-   ========================================= */
-.scenario-card {
-    padding: 50px;
-    margin-top: 20px;
-    animation: fadeUp 0.5s ease-out forwards;
-}
-
-.badge {
-    background: linear-gradient(90deg, rgba(255,0,128,0.3), rgba(0,212,255,0.3));
-    color: #ffffff;
-    border: 1px solid rgba(255,255,255,0.2);
-    padding: 8px 18px;
-    border-radius: 30px;
-    font-size: 0.8rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-}
-
-#res-problem {
-    font-size: 1.4rem;
-    line-height: 1.6;
-    margin-top: 30px;
-    margin-bottom: 40px;
-    font-weight: 400;
-    color: #f4f4f5;
-}
-
-/* --- FIXED: Overlapping Reveal Buttons --- */
-.reveal-section {
-    margin-bottom: 25px; /* Creates clean space between stacked buttons */
-}
-
-.btn-outline, .btn-secondary {
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: var(--text-main);
-    padding: 12px 24px;
-    border-radius: 30px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: all 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-}
-
-.btn-outline:hover, .btn-secondary:hover {
-    background: #ffffff;
-    color: #000000;
-    transform: scale(1.03);
-}
-
-.list-group {
-    background: rgba(0, 0, 0, 0.3);
-    border-left: 3px solid var(--accent-cyan);
-    padding: 20px 25px 20px 45px;
-    border-radius: 0 16px 16px 0;
-    margin-top: 15px; /* Pushes list away from its own button */
-    color: var(--text-muted);
-}
-
-/* --- NEW: Premium Info Boxes (Pro Tips & Refs) --- */
-.info-box {
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-    padding: 25px;
-    margin-top: 30px;
-}
-
-.info-box strong {
-    color: var(--accent-cyan);
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    display: block;
-    margin-bottom: 10px;
-}
-
-/* Primary Button (Generate Random) */
-.btn-primary {
-    width: 100%;
-    padding: 18px;
-    background: linear-gradient(90deg, #ff007f, #00d4ff);
-    background-size: 200% auto;
-    color: #ffffff;
-    border: none;
-    border-radius: 50px;
-    font-size: 1.15rem;
-    font-weight: 800;
-    cursor: pointer;
-    box-shadow: 0 10px 25px rgba(255, 0, 128, 0.3);
-    transition: all 0.3s ease;
-    animation: gradientShift 5s infinite linear;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 15px 35px rgba(0, 212, 255, 0.4);
-}
-
-/* Loading Spinner */
-.spinner {
-    width: 50px; height: 50px;
-    border: 3px solid rgba(255,255,255,0.1);
-    border-top-color: var(--accent-magenta);
-    border-bottom-color: var(--accent-cyan);
-    border-radius: 50%;
-    animation: spin 1s cubic-bezier(0.6, 0.2, 0.4, 0.8) infinite;
-    margin: 40px auto;
-}
-
-.hidden { display: none !important; }
-
-@keyframes spin { to { transform: rotate(360deg); } }
-@keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-@keyframes gradientShift {
-    0% { background-position: 0% center; }
-    100% { background-position: 200% center; }
-}
-
 /* =========================================
    NEW: PREMIUM LANDING PAGE STYLES
    ========================================= */
-/* Fix Aurora background so it doesn't scroll away */
-body::before, body::after, .container::before {
-    position: fixed; 
-}
-
 .hero-section {
     text-align: center;
     padding: 80px 0 60px 0;
@@ -286,7 +101,7 @@ body::before, body::after, .container::before {
 }
 
 .hero-title {
-    font-size: 4.5rem; /* Massive Apple-style header */
+    font-size: 4.5rem; 
     font-weight: 800;
     letter-spacing: -0.05em;
     line-height: 1.1;
@@ -360,6 +175,9 @@ body::before, body::after, .container::before {
     line-height: 1.6;
 }
 
+/* =========================================
+   APP SECTION & MODULE GRID
+   ========================================= */
 .app-section {
     padding-top: 40px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -376,8 +194,250 @@ body::before, body::after, .container::before {
     margin-bottom: 5px;
 }
 
-/* Media Query for mobile devices */
+.module-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.module-card, .scenario-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid var(--glass-border);
+    border-top: 1px solid var(--glass-highlight);
+    border-left: 1px solid var(--glass-highlight);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-radius: 24px;
+    color: var(--text-main);
+}
+
+.module-card {
+    padding: 24px 20px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.module-card:hover {
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 212, 255, 0.2);
+}
+
+/* =========================================
+   SCENARIO RESULTS UI
+   ========================================= */
+.scenario-card {
+    padding: 50px;
+    margin-top: 20px;
+    animation: fadeUp 0.5s ease-out forwards;
+}
+
+.badge {
+    background: linear-gradient(90deg, rgba(255,0,128,0.3), rgba(0,212,255,0.3));
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+#res-problem {
+    font-size: 1.4rem;
+    line-height: 1.6;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    font-weight: 400;
+    color: #f4f4f5;
+}
+
+.reveal-section {
+    margin-bottom: 25px; 
+}
+
+.btn-outline, .btn-secondary {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-main);
+    padding: 12px 24px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-outline:hover, .btn-secondary:hover {
+    background: #ffffff;
+    color: #000000;
+    transform: scale(1.03);
+}
+
+.list-group {
+    background: rgba(0, 0, 0, 0.3);
+    border-left: 3px solid var(--accent-cyan);
+    padding: 20px 25px 20px 45px;
+    border-radius: 0 16px 16px 0;
+    margin-top: 15px; 
+    color: var(--text-muted);
+}
+
+.info-box {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 25px;
+    margin-top: 30px;
+}
+
+.info-box strong {
+    color: var(--accent-cyan);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* =========================================
+   BUTTONS & SPINNER
+   ========================================= */
+.btn-primary {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(90deg, #ff007f, #00d4ff);
+    background-size: 200% auto;
+    color: #ffffff;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.15rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(255, 0, 128, 0.3);
+    transition: all 0.3s ease;
+    animation: gradientShift 5s infinite linear;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(0, 212, 255, 0.4);
+}
+
+.spinner {
+    width: 50px; height: 50px;
+    border: 3px solid rgba(255,255,255,0.1);
+    border-top-color: var(--accent-magenta);
+    border-bottom-color: var(--accent-cyan);
+    border-radius: 50%;
+    animation: spin 1s cubic-bezier(0.6, 0.2, 0.4, 0.8) infinite;
+    margin: 40px auto;
+}
+
+.hidden { display: none !important; }
+
+/* =========================================
+   PREMIUM FOOTER
+   ========================================= */
+.glass-footer {
+    width: 100%; /* Spans the entire screen */
+    margin-top: 40px;
+    padding: 40px 20px;
+    background: rgba(0, 0, 0, 0.4); /* Deepens the glass effect */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--glass-border);
+    position: relative;
+    z-index: 10;
+    box-sizing: border-box; /* Prevents horizontal scrolling issues */
+}
+
+.footer-content {
+    max-width: 900px;
+    margin: 0 auto; /* Aligns the footer text perfectly with your app container */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-brand p {
+    margin: 12px 0 0 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.tech-badge {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    margin-bottom: 0;
+    font-size: 0.75rem;
+    padding: 4px 12px;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icon {
+    color: var(--text-muted);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.social-icon:hover {
+    color: var(--accent-cyan);
+    background: rgba(0, 212, 255, 0.1);
+    border-color: rgba(0, 212, 255, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 212, 255, 0.2);
+}
+
+/* =========================================
+   MEDIA QUERIES
+   ========================================= */
 @media (max-width: 768px) {
     .hero-title { font-size: 3rem; }
     .hero-subtitle { font-size: 1.1rem; }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    .social-links {
+        justify-content: center;
+        margin-top: 10px;
+    }
+}
+
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes gradientShift {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
 }
