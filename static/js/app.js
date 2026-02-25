@@ -3,6 +3,9 @@ const selectionScreen = document.getElementById('selection-screen');
 const loadingScreen = document.getElementById('loading-screen');
 const resultScreen = document.getElementById('result-screen');
 
+// Global variable to prevent overlapping typewriter animations
+let typingTimeout; 
+
 async function generateScenario(moduleName) {
     // 1. Update UI to loading state
     selectionScreen.classList.add('hidden');
@@ -41,9 +44,11 @@ async function generateScenario(moduleName) {
 
 function populateScenarioUI(data) {
     document.getElementById('res-module').innerText = data.module_name || "ServiceNow Module";
-    document.getElementById('res-problem').innerText = data.problem_statement || "No problem statement generated.";
-    
     document.getElementById('res-tips').innerText = data.pro_tips || "No pro tips available.";
+
+    // Trigger the premium Typewriter Effect for the problem statement
+    const problemText = data.problem_statement || "No problem statement generated.";
+    typeWriterEffect(problemText, 'res-problem', 25); // 25 milliseconds per character
 
     // Populate Lists (Hints, Steps, References)
     populateList('hints-container', data.hints);
@@ -54,6 +59,30 @@ function populateScenarioUI(data) {
     document.getElementById('hints-container').classList.add('hidden');
     document.getElementById('steps-container').classList.add('hidden');
 }
+
+// --- NEW TYPEWRITER LOGIC ---
+function typeWriterEffect(text, elementId, speed) {
+    const element = document.getElementById(elementId);
+    element.innerHTML = ''; // Clear previous text
+    let i = 0;
+
+    // Clear any ongoing typing animation if the user clicked rapidly
+    if (typingTimeout) {
+        clearTimeout(typingTimeout);
+    }
+
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            typingTimeout = setTimeout(type, speed);
+        }
+    }
+    
+    // Start the animation
+    type();
+}
+// ----------------------------
 
 function populateList(elementId, itemsArray) {
     const listElement = document.getElementById(elementId);
@@ -81,4 +110,9 @@ function resetApp() {
     resultScreen.classList.add('hidden');
     loadingScreen.classList.add('hidden');
     selectionScreen.classList.remove('hidden');
+    
+    // Stop typing if the user clicks "Back" mid-sentence
+    if (typingTimeout) {
+        clearTimeout(typingTimeout);
+    }
 }
