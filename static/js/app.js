@@ -141,3 +141,30 @@ function scrollToApp() {
     const appSection = document.getElementById('app-section');
     appSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+// --- EXPORT TO PDF LOGIC ---
+function exportToPDF() {
+    // 1. Target the specific card we want to print
+    const element = document.querySelector('.scenario-card');
+    
+    // 2. Temporarily hide all buttons so they don't show up in the printed PDF
+    const buttons = element.querySelectorAll('button');
+    buttons.forEach(btn => btn.style.display = 'none');
+
+    // 3. Get the current module name to name the file automatically
+    let moduleName = document.getElementById('res-module').innerText;
+    let fileName = `ServiceNow_PDI_${moduleName.replace(/\s+/g, '_')}.pdf`;
+
+    // 4. Set the PDF configuration
+    const opt = {
+        margin:       0.5,
+        filename:     fileName,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#050505' }, // Preserves your dark background
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    // 5. Generate the PDF, then restore the buttons
+    html2pdf().set(opt).from(element).save().then(() => {
+        buttons.forEach(btn => btn.style.display = '');
+    });
+}
