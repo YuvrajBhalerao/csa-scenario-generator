@@ -256,3 +256,128 @@ header p { color: var(--text-muted); font-size: 1.15rem; font-weight: 400; }
     0% { background-position: 0% center; }
     100% { background-position: 200% center; }
 }
+
+/* =========================================
+   NEW: PREMIUM LANDING PAGE STYLES
+   ========================================= */
+/* Fix Aurora background so it doesn't scroll away */
+body::before, body::after, .container::before {
+    position: fixed; 
+}
+
+.hero-section {
+    text-align: center;
+    padding: 80px 0 60px 0;
+    animation: fadeUp 0.8s ease-out forwards;
+}
+
+.pill-badge {
+    display: inline-block;
+    background: rgba(0, 212, 255, 0.1);
+    color: var(--accent-cyan);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+.hero-title {
+    font-size: 4.5rem; /* Massive Apple-style header */
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 1.1;
+    margin: 0 0 20px 0;
+}
+
+.text-gradient {
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-magenta));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 40px auto;
+}
+
+.hero-btn {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+/* --- Features Bento Box --- */
+.features-section {
+    margin-bottom: 80px;
+    animation: fadeUp 1s ease-out forwards;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.feature-card-premium {
+    background: rgba(20, 20, 25, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 30px;
+    border-radius: 24px;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card-premium:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 0 15px rgba(255, 255, 255, 0.03);
+    border-color: rgba(0, 212, 255, 0.3);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.feature-card-premium h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    color: #fff;
+}
+
+.feature-card-premium p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.app-section {
+    padding-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+/* Media Query for mobile devices */
+@media (max-width: 768px) {
+    .hero-title { font-size: 3rem; }
+    .hero-subtitle { font-size: 1.1rem; }
+}
