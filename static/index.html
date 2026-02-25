@@ -13,63 +13,95 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>ServiceNow PDI Scenario Generator</h1>
-            <p>Practice real-world administration tasks for your CSA exam.</p>
-        </header>
-
-        <main id="selection-screen">
-            <button class="btn-primary" onclick="generateScenario('random')">
-                ✨ Generate from Any Module
-            </button>
+        <section class="hero-section">
+            <div class="pill-badge">✨ Powered by Gemini AI</div>
+            <h1 class="hero-title">Master ServiceNow. <br><span class="text-gradient">Faster than ever.</span></h1>
+            <p class="hero-subtitle">Generate infinite, real-world Personal Developer Instance (PDI) challenges instantly. Train your muscle memory for the CSA exam with AI-crafted scenarios.</p>
             
-            <div class="module-grid">
-                <button class="module-card" onclick="generateScenario('ServiceNow Overview')">1. ServiceNow Overview</button>
-                <button class="module-card" onclick="generateScenario('User Interface & Navigation')">2. User Interface & Navigation</button>
-                <button class="module-card" onclick="generateScenario('Lists, Filters & Forms')">3. Lists, Filters & Forms</button>
-                <button class="module-card" onclick="generateScenario('Data Schema & Tables')">4. Data Schema & Tables</button>
-                <button class="module-card" onclick="generateScenario('Self-Service, Knowledge-Catalog & Workflows')">5. Self-Service, Knowledge & Workflows</button>
-                <button class="module-card" onclick="generateScenario('Reporting & Dashboards, Platform Analytics')">6. Reporting & Analytics</button>
-                <button class="module-card" onclick="generateScenario('ServiceNow Utilities')">7. ServiceNow Utilities</button>
-                <button class="module-card" onclick="generateScenario('Security in ServiceNow Platform')">8. Security in Platform</button>
+            <div class="hero-buttons">
+                <button class="btn-primary hero-btn" onclick="scrollToApp()">Start Generating Now</button>
             </div>
-        </main>
+        </section>
 
-        <div id="loading-screen" class="hidden">
-            <div class="spinner"></div>
-            <h2>Spinning up your PDI challenge...</h2>
-            <p>Consulting the Now Platform guidelines.</p>
-        </div>
+        <section class="features-section">
+            <div class="features-grid">
+                <div class="feature-card-premium">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Dynamic AI Logic</h3>
+                    <p>No two practice runs are the same. State-of-the-art LLMs craft unique business problems every single time.</p>
+                </div>
+                <div class="feature-card-premium">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Exam-Focused</h3>
+                    <p>Scenarios are strictly mapped to the official ServiceNow Certified System Administrator (CSA) blueprint.</p>
+                </div>
+                <div class="feature-card-premium">
+                    <div class="feature-icon">💡</div>
+                    <h3>Guided Solutions</h3>
+                    <p>Get stuck? Reveal step-by-step guidance and Pro Tips without breaking your workflow.</p>
+                </div>
+            </div>
+        </section>
 
-        <div id="result-screen" class="hidden">
-            <button class="btn-secondary" onclick="resetApp()">← Back to Modules</button>
-            
-            <div class="scenario-card">
-                <span class="badge" id="res-module">Module Name</span>
-                <h2 id="res-problem">Problem Statement</h2>
+        <section id="app-section" class="app-section">
+            <div id="selection-screen">
+                <div class="section-header">
+                    <h2>Select a Module</h2>
+                    <p>Choose a focus area to generate your custom PDI scenario.</p>
+                </div>
                 
-                <div class="reveal-section">
-                    <button class="btn-outline" onclick="toggleVisibility('hints-container')">💡 Show Hints</button>
-                    <ul id="hints-container" class="hidden list-group"></ul>
-                </div>
-
-                <div class="reveal-section">
-                    <button class="btn-outline" onclick="toggleVisibility('steps-container')">🛠️ Show Guided Steps</button>
-                    <ul id="steps-container" class="hidden list-group"></ul>
-                </div>
-
-                <div class="info-box">
-                    <strong>⭐ Pro Tip:</strong> <span id="res-tips"></span>
-                </div>
-
-                <div class="info-box">
-                    <strong>📚 Study References:</strong>
-                    <ul id="res-refs"></ul>
+                <button class="btn-primary" onclick="generateScenario('Random')" style="margin-bottom: 25px;">✨ Generate from Any Module</button>
+                
+                <div class="module-grid">
+                    <button class="module-card" onclick="generateScenario('ServiceNow Overview')">1. ServiceNow Overview</button>
+                    <button class="module-card" onclick="generateScenario('User Interface & Navigation')">2. User Interface & Navigation</button>
+                    <button class="module-card" onclick="generateScenario('Lists, Filters & Forms')">3. Lists, Filters & Forms</button>
+                    <button class="module-card" onclick="generateScenario('Data Schema & Tables')">4. Data Schema & Tables</button>
+                    <button class="module-card" onclick="generateScenario('Self-Service, Knowledge-Catalog & Workflows')">5. Self-Service, Knowledge & Workflows</button>
+                    <button class="module-card" onclick="generateScenario('Reporting & Dashboards, Platform Analytics')">6. Reporting & Analytics</button>
+                    <button class="module-card" onclick="generateScenario('ServiceNow Utilities')">7. ServiceNow Utilities</button>
+                    <button class="module-card" onclick="generateScenario('Security in ServiceNow Platform')">8. Security in Platform</button>
                 </div>
             </div>
-        </div>
-    </div>
 
+            <div id="loading-screen" class="hidden text-center" style="margin-top: 50px;">
+                <div class="spinner"></div>
+                <h2 style="margin-top: 20px;">Spinning up your PDI challenge...</h2>
+                <p style="color: var(--text-muted);">Consulting the Now Platform guidelines.</p>
+            </div>
+
+            <div id="result-screen" class="hidden">
+                <div class="scenario-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <span class="badge" id="res-module">Module Name</span>
+                        <button class="btn-outline" onclick="resetApp()" style="padding: 8px 16px; font-size: 0.85rem;">← Back to Modules</button>
+                    </div>
+
+                    <div id="res-problem">Generating problem statement...</div>
+
+                    <div class="reveal-section">
+                        <button class="btn-secondary" onclick="toggleVisibility('hints-container')">💡 Show Hints</button>
+                        <ul id="hints-container" class="list-group hidden"></ul>
+                    </div>
+
+                    <div class="reveal-section">
+                        <button class="btn-secondary" onclick="toggleVisibility('steps-container')">🛠️ Show Guided Steps</button>
+                        <ul id="steps-container" class="list-group hidden"></ul>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>⭐ Pro Tip</strong>
+                        <div id="res-tips">Pro tips will appear here.</div>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>📚 Study References</strong>
+                        <ul id="res-refs" style="margin: 10px 0 0 0; padding-left: 20px; color: var(--text-muted);"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
     <script src="/static/js/app.js"></script>
 </body>
 </html>
