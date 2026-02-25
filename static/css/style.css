@@ -32,7 +32,7 @@ body {
 }
 
 .container {
-    max-width: 1000px; /* Allows 3 perfect columns for features */
+    max-width: 1000px; /* Increased to allow 3 perfect columns for features */
     width: 100%;
     margin: 0 auto;
     padding: 40px 20px;
@@ -127,7 +127,7 @@ body::after {
 }
 
 /* =========================================
-   BENTO BOX FEATURES
+   BENTO BOX FEATURES (Symmetrical Fix)
    ========================================= */
 .features-section {
     margin-bottom: 80px;
@@ -348,11 +348,11 @@ body::after {
 .hidden { display: none !important; }
 
 /* =========================================
-   PREMIUM FOOTER (Perfectly fixed to bottom)
+   PREMIUM FOOTER (Now perfectly fixed to bottom)
    ========================================= */
 .glass-footer {
     width: 100%;
-    margin-top: auto; 
+    margin-top: auto; /* Forces footer to the absolute bottom of the flex column */
     padding: 40px 20px;
     background: rgba(0, 0, 0, 0.5); 
     backdrop-filter: blur(20px);
@@ -415,7 +415,7 @@ body::after {
    MEDIA QUERIES (Mobile Responsiveness)
    ========================================= */
 @media (max-width: 800px) {
-    .features-grid { grid-template-columns: 1fr; } 
+    .features-grid { grid-template-columns: 1fr; } /* Stacks bento boxes on mobile */
     .hero-title { font-size: 3rem; }
     .hero-subtitle { font-size: 1.1rem; }
     
