@@ -28,6 +28,11 @@ async function generateScenario(moduleName) {
 
         const data = await response.json();
 
+        // Check if the backend returned an explicit error message
+        if (data.error) {
+            throw new Error(data.error);
+        }
+
         // 3. Populate the UI with AI data
         populateScenarioUI(data);
 
@@ -37,7 +42,7 @@ async function generateScenario(moduleName) {
 
     } catch (error) {
         console.error("Error generating scenario:", error);
-        alert("Failed to generate scenario. Please try again.");
+        alert("Failed to generate scenario. Please try again.\nError details: " + error.message);
         resetApp();
     }
 }
@@ -60,7 +65,6 @@ function populateScenarioUI(data) {
     document.getElementById('steps-container').classList.add('hidden');
 }
 
-// --- NEW TYPEWRITER LOGIC ---
 // --- UPGRADED SMART TYPEWRITER LOGIC ---
 function typeWriterEffect(text, elementId, speed) {
     const element = document.getElementById(elementId);
@@ -70,7 +74,7 @@ function typeWriterEffect(text, elementId, speed) {
     // 1. Convert Markdown bold (**text**) to HTML <strong> tags with our neon color
     const formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong style="color: var(--accent-cyan); font-weight: 600;">$1</strong>');
 
-    // Clear any ongoing typing animation
+    // Clear any ongoing typing animation if the user clicked rapidly
     if (typingTimeout) {
         clearTimeout(typingTimeout);
     }
@@ -102,13 +106,12 @@ function typeWriterEffect(text, elementId, speed) {
     // Start the animation
     type();
 }
-// ----------------------------
 
 function populateList(elementId, itemsArray) {
     const listElement = document.getElementById(elementId);
     listElement.innerHTML = ''; // Clear previous items
 
-    if (itemsArray && Array.isArray(itemsArray)) {
+    if (itemsArray && Array.isArray(itemsArray) && itemsArray.length > 0) {
         itemsArray.forEach(item => {
             const li = document.createElement('li');
             li.innerText = item;
@@ -136,6 +139,7 @@ function resetApp() {
         clearTimeout(typingTimeout);
     }
 }
+
 // --- Smooth Scroll Function ---
 function scrollToApp() {
     const appSection = document.getElementById('app-section');
