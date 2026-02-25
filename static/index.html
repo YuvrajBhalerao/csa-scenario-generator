@@ -72,9 +72,13 @@
 
             <div id="result-screen" class="hidden">
                 <div class="scenario-card">
+                    
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                         <span class="badge" id="res-module">Module Name</span>
-                        <button class="btn-outline" onclick="resetApp()" style="padding: 8px 16px; font-size: 0.85rem;">← Back to Modules</button>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn-outline" onclick="exportToPDF()" style="padding: 8px 16px; font-size: 0.85rem; border-color: var(--accent-cyan); color: var(--accent-cyan);">⬇️ Download PDF</button>
+                            <button class="btn-outline" onclick="resetApp()" style="padding: 8px 16px; font-size: 0.85rem;">← Back to Modules</button>
+                        </div>
                     </div>
 
                     <div id="res-problem">Generating problem statement...</div>
@@ -118,6 +122,7 @@
         </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="/static/js/app.js"></script>
 </body>
 </html>
