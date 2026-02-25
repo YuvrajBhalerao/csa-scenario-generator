@@ -136,3 +136,8 @@ function resetApp() {
         clearTimeout(typingTimeout);
     }
 }
+// --- Smooth Scroll Function ---
+function scrollToApp() {
+    const appSection = document.getElementById('app-section');
+    appSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
