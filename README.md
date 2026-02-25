@@ -1,4 +1,4 @@
-# ⚡ ServiceNow CSA PDI Generator
+# ⚡ ServiceNow CSA PDI Scenario Generator
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python)
 ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
