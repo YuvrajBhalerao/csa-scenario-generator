@@ -61,19 +61,39 @@ function populateScenarioUI(data) {
 }
 
 // --- NEW TYPEWRITER LOGIC ---
+// --- UPGRADED SMART TYPEWRITER LOGIC ---
 function typeWriterEffect(text, elementId, speed) {
     const element = document.getElementById(elementId);
-    element.innerHTML = ''; // Clear previous text
     let i = 0;
+    let currentHTML = '';
 
-    // Clear any ongoing typing animation if the user clicked rapidly
+    // 1. Convert Markdown bold (**text**) to HTML <strong> tags with our neon color
+    const formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong style="color: var(--accent-cyan); font-weight: 600;">$1</strong>');
+
+    // Clear any ongoing typing animation
     if (typingTimeout) {
         clearTimeout(typingTimeout);
     }
 
     function type() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
+        if (i < formattedText.length) {
+            // 2. If we detect an HTML tag, process the whole tag instantly
+            if (formattedText.charAt(i) === '<') {
+                while (formattedText.charAt(i) !== '>' && i < formattedText.length) {
+                    currentHTML += formattedText.charAt(i);
+                    i++;
+                }
+                currentHTML += '>'; // Add the closing bracket
+                i++; // Move to the next character
+                
+                // Call type() immediately to skip the typing delay for hidden HTML tags
+                type(); 
+                return;
+            }
+            
+            // 3. Otherwise, type the normal text character by character
+            currentHTML += formattedText.charAt(i);
+            element.innerHTML = currentHTML;
             i++;
             typingTimeout = setTimeout(type, speed);
         }
